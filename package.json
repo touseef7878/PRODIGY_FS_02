@@ -5,10 +5,11 @@
   "main": "index.html",
   "scripts": {
     "start": "node dev-server.js",
+    "dev": "node dev-server.js",
     "build": "echo 'Building project...' && echo 'Copying files...' && echo 'Build complete!'",
     "deploy": "echo 'Ready for deployment to free hosting platforms'"
   },
   "keywords": ["employee", "management", "system", "ui", "modern"],
-  "author": "Your Name",
+  "author": "Touseef",
   "license": "MIT"
 }
