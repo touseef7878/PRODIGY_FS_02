@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System - Employees</title>
+    <link rel="stylesheet" href="styles-advanced.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard-section">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1><i class="fas fa-users"></i> Employee Management System</h1>
+                        <span class="company-name">PRODIGY INFOTEC</span>
+                    </div>
+                    <div class="header-right">
+                        <span id="admin-name" class="admin-name"></span>
+                        <button id="logout-btn" class="btn btn-secondary">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <a href="dashboard.html" class="nav-tab"><i class="fas fa-chart-dashboard"></i> Dashboard</a>
+                <a href="employees.html" class="nav-tab active"><i class="fas fa-users"></i> Employees</a>
+                <a href="add-employee.html" class="nav-tab"><i class="fas fa-user-plus"></i> Add Employee</a>
+            </nav>
+
+            <!-- Employees Tab -->
+            <div id="employees-tab" class="tab-content active">
+                <div class="employees-header">
+                    <h2>Employee List</h2>
+                    <div class="search-and-filters">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Search employees...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select id="department-filter">
+                            <option value="">All Departments</option>
+                        </select>
+                        <select id="status-filter">
+                            <option value="">All Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="employees-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employees-tbody">
+                            <!-- Employee rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button id="prev-page" class="btn btn-secondary">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="btn btn-secondary">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

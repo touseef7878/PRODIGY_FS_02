@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="styles-advanced.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Login Section -->
+        <div id="login-section" class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1><i class="fas fa-users"></i> Employee Management System</h1>
+                    <p>PRODIGY INFOTEC</p>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username or Email</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                <div id="login-error" class="error-message hidden"></div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard-section" class="hidden">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1><i class="fas fa-users"></i> Employee Management System</h1>
+                        <span class="company-name">PRODIGY INFOTEC</span>
+                    </div>
+                    <div class="header-right">
+                        <span id="admin-name" class="admin-name"></span>
+                        <button id="logout-btn" class="btn btn-secondary">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="dashboard">
+                    <i class="fas fa-chart-dashboard"></i> Dashboard
+                </button>
+                <button class="nav-tab" data-tab="employees">
+                    <i class="fas fa-users"></i> Employees
+                </button>
+                <button class="nav-tab" data-tab="add-employee">
+                    <i class="fas fa-user-plus"></i> Add Employee
+                </button>
+            </nav>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-employees">0</h3>
+                            <p>Total Employees</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon active">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="active-employees">0</h3>
+                            <p>Active Employees</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon inactive">
+                            <i class="fas fa-user-times"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="inactive-employees">0</h3>
+                            <p>Inactive Employees</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon deleted">
+                            <i class="fas fa-user-slash"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="deleted-employees">0</h3>
+                            <p>Deleted Employees</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h2>Employees by Department</h2>
+                    <div id="department-chart" class="chart-container">
+                        <!-- Department chart will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employees Tab -->
+            <div id="employees-tab" class="tab-content">
+                <div class="employees-header">
+                    <h2>Employee List</h2>
+                    <div class="search-and-filters">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Search employees...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select id="department-filter">
+                            <option value="">All Departments</option>
+                        </select>
+                        <select id="status-filter">
+                            <option value="">All Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="employees-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employees-tbody">
+                            <!-- Employee rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button id="prev-page" class="btn btn-secondary">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="btn btn-secondary">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Add Employee Tab -->
+            <div id="add-employee-tab" class="tab-content">
+                <div class="form-container">
+                    <h2>Add New Employee</h2>
+                    <form id="employee-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emp-name">Full Name *</label>
+                                <input type="text" id="emp-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emp-email">Email *</label>
+                                <input type="email" id="emp-email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emp-phone">Phone</label>
+                                <input type="tel" id="emp-phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="emp-department">Department *</label>
+                                <input type="text" id="emp-department" name="department" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emp-position">Position *</label>
+                                <input type="text" id="emp-position" name="position" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emp-salary">Salary *</label>
+                                <input type="number" id="emp-salary" name="salary" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emp-hire-date">Hire Date *</label>
+                                <input type="date" id="emp-hire-date" name="hire_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emp-status">Status</label>
+                                <select id="emp-status" name="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="emp-address">Address</label>
+                            <textarea id="emp-address" name="address" rows="3"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="clear-form" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Employee
+                            </button>
+                        </div>
+                    </form>
+                    <div id="form-message" class="message hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Modal -->
+    <div id="employee-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Employee Details</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="employee-details">
+                    <!-- Employee details will be populated here -->
+                </div>
+                <div id="edit-employee-form" class="hidden">
+                    <!-- Edit form will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="edit-employee-btn" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button id="save-employee-btn" class="btn btn-success hidden">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <button id="cancel-edit-btn" class="btn btn-secondary hidden">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button id="delete-employee-btn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Picture Upload Modal -->
+    <div id="upload-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload Profile Picture</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area">
+                    <input type="file" id="profile-upload" accept="image/*" class="hidden">
+                    <div class="upload-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to select an image or drag and drop</p>
+                        <small>Supported formats: PNG, JPG, JPEG, GIF, WEBP (Max 2MB)</small>
+                    </div>
+                    <div id="upload-preview" class="hidden">
+                        <img id="preview-image" src="" alt="Preview">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="upload-btn" class="btn btn-primary">
+                    <i class="fas fa-upload"></i> Upload
+                </button>
+                <button class="btn btn-secondary modal-close">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
